@@ -40,9 +40,15 @@ img.plugin = http://hex.digital-poets.net/staticImage/USER?cooldown=&in=&out=
 img.password = 
 
 game.hex = hex
+
 game.tesl = tesl,esl,legends,tes:l,tes
+
 game.none = none,disable
+
 game.noGameFoundMessage = No matching game found. Current games are 'HEX', 'TES:L' or use 'disable' to turn off commands that are game specific
+
 game.noGameSetMessage = Game specific commands are currently disabled for this channel
+
 game.hexGameMessage = Current game is set to HEX: Shards of Fate
+
 game.teslGameMessage = Current game is set to The Elder Scrolls: Legends
