@@ -72,6 +72,8 @@ public class ChatBot extends PircBot {
 			}
 
 		});
+		
+		
 
 		super.onConnect();
 	}
@@ -81,7 +83,6 @@ public class ChatBot extends PircBot {
 	 */
 	private void sleepForChannelJoin() {
 		
-		//TODO: Change to task running in another thread so that the bot can be used while connecting to channels.
 		try {
 			Thread.sleep(config.getChannelJoinTimeout());
 		} catch (Exception e) {

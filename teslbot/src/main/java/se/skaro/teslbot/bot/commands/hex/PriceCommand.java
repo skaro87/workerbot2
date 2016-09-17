@@ -32,7 +32,7 @@ public class PriceCommand extends AbstractCommand {
 				}
 
 				else {
-					data = getBestMatchingItems(data, input);
+					data = getExactMatchIncludingAA(data, input);
 
 					if (data.size() == 1) {
 						messageSender.sendMessage(bot, sender, getPriceForItem(data.get(0)), channel, true);
@@ -58,29 +58,30 @@ public class PriceCommand extends AbstractCommand {
 
 				}
 
+			} else {
+				messageSender.sendMessage(bot, sender, "No data found for item "+input, channel, true);
 			}
 
 		}
 
 	}
 
-	private List<ItemPriceSimple> getBestMatchingItems(List<ItemPriceSimple> data, String message) {
-		List<ItemPriceSimple> bestMatches = new ArrayList<>();
+	private List<ItemPriceSimple> getExactMatchIncludingAA(List<ItemPriceSimple> data, String message) {
+		List<ItemPriceSimple> matches = new ArrayList<>();
 
 		data.forEach(i -> {
 
 			if (i.getName().replace("AA", "").trim().equalsIgnoreCase(message)) {
-				bestMatches.add(i);
+				matches.add(i);
 			}
 
 		});
 
-		//TODO: Better logic
-		if (bestMatches.isEmpty()){
+		if (matches.isEmpty()){
 			return data;
 		}
 
-		return bestMatches;
+		return matches;
 	}
 
 	private String getPriceForItem(ItemPriceSimple item) {
