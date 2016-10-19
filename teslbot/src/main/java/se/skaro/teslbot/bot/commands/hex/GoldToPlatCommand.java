@@ -37,7 +37,7 @@ public class GoldToPlatCommand extends AbstractCommand {
 				
 				
 				if (ammountToCheck <= 0){
-					messageSender.sendMessage(bot, sender, "Only positive numbers allowed", channel, true);
+					messageSender.sendMessageOrWhisper(bot, sender, "Only positive numbers allowed", channel);
 				} else {
 					
 					Double ratio = config.getRatioApprox();
@@ -46,13 +46,13 @@ public class GoldToPlatCommand extends AbstractCommand {
 						ratio = (Double.valueOf(data.get(0).getGold()) / Double.valueOf(data.get(0).getPlatinum()));
 					}
 					
-					messageSender.sendMessage(bot, sender, String.format("%.0f", ammountToCheck) + " gold is worth "+ String.format("%.2f", (ammountToCheck / ratio)) + " platinum", channel, true);
+					messageSender.sendMessageOrWhisper(bot, sender, String.format("%.0f", ammountToCheck) + " gold is worth "+ String.format("%.2f", (ammountToCheck / ratio)) + " platinum", channel);
 					
 				}
 				
 				
 			} else {
-				messageSender.sendMessage(bot, sender, "Only positive numbers allowed", channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "Only positive numbers allowed", channel);
 			}
 		}
 

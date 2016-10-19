@@ -1,4 +1,4 @@
-package se.skaro.teslbot.util.twitch.json;
+package se.skaro.teslbot.util.twitch.mod.json;
 
 // TODO: Auto-generated Javadoc
 /**

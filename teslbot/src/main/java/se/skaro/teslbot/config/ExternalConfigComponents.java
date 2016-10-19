@@ -48,8 +48,14 @@ public class ExternalConfigComponents {
 	@Value("${twitch.globalwhispersettings}")
 	private boolean globalWhisperSettings;
 	
-	@Value("${twitchapi.url}")
+	@Value("${twitchapi.clientid}")
+	private String twitchClientId;
+	
+	@Value("${twitchapi.chattersurl}")
 	private String twitchApiUrl;
+	
+	@Value("${twitchapi.gameurl}")
+	private String twitchGameUrl;
 	
 	@Value("${game.hex}")
 	private String hexGameString;
@@ -86,6 +92,9 @@ public class ExternalConfigComponents {
 	
 	@Value("${img.password}")
 	private String imgPassword;
+	
+	@Value("${api.keyvalue}")
+	private String keyValue;
 	
 	public boolean isBotVerbiose() {
 		return botVerbiose;
@@ -191,7 +200,19 @@ public class ExternalConfigComponents {
 		return imgPassword;
 	}
 
+	public String getKeyValue() {
+		return keyValue;
+	}
 
+	public String getTwitchClientId() {
+		return twitchClientId;
+	}
+
+	public String getTwitchGameUrl() {
+		return twitchGameUrl;
+	}
+
+	
 	
 	
 	

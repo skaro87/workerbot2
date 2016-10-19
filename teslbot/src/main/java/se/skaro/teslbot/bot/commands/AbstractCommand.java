@@ -91,8 +91,8 @@ public abstract class AbstractCommand {
 	protected boolean isInputLengthOkay(String input, ChatBot bot, String sender, String channel) {
 
 		if (input.length() < MINIMUM_SEARCH_LENGTH) {
-			messageSender.sendMessage(bot, sender,
-					"You need at least " + MINIMUM_SEARCH_LENGTH + " characters to do a search", channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender,
+					"You need at least " + MINIMUM_SEARCH_LENGTH + " characters to do a search", channel);
 			return false;
 		}
 		return true;

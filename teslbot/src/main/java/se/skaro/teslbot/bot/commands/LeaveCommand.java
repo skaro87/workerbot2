@@ -45,7 +45,7 @@ public class LeaveCommand extends AbstractCommand {
 				leaveChannel(bot, sender, channel);
 			}
 		} else {
-			bot.sendMessage(channel, "I am not in your channel, "+sender);
+			messageSender.sendMessage(bot, sender, "I am not in your channel, "+sender, channel);
 		}
 
 	}
@@ -58,8 +58,8 @@ public class LeaveCommand extends AbstractCommand {
 	 * @param channel the channel
 	 */
 	private void leaveChannel(ChatBot bot, String sender, String channel) {
-		bot.sendMessage(channel, "Leaving channel #" + sender);
-		bot.sendMessage(config.getChannelPrefix() + sender, config.getLeaveMessage());
+		messageSender.sendMessage(bot, sender, "Leaving channel #" + sender, channel);
+		messageSender.sendMessage(bot, sender, config.getLeaveMessage(), config.getChannelPrefix() + sender);
 		bot.partChannel(config.getChannelPrefix() + sender);
 	}
 

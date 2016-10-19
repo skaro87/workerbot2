@@ -19,6 +19,9 @@ import se.skaro.teslbot.bot.commands.hex.PriceCommand;
 import se.skaro.teslbot.bot.commands.hex.RatioCommand;
 import se.skaro.teslbot.bot.commands.hex.SetIGNCommand;
 import se.skaro.teslbot.bot.commands.hex.WhoIsCommand;
+import se.skaro.teslbot.bot.commands.hex.api.ApiKeyCommand;
+import se.skaro.teslbot.bot.commands.hex.api.RankCommand;
+import se.skaro.teslbot.bot.commands.hex.api.StatusCommand;
 import se.skaro.teslbot.config.ExternalConfigComponents;
 import se.skaro.teslbot.data.entity.TextCommand;
 import se.skaro.teslbot.data.repository.TextCommandRepository;
@@ -96,6 +99,17 @@ public class Commands {
 	
 	@Autowired
 	private WhoIsCommand whoIsCommand;
+	
+	// API
+	
+	@Autowired
+	private RankCommand rankCommand;
+	
+	@Autowired
+	private StatusCommand statusCommand;
+	
+	@Autowired
+	private ApiKeyCommand apiKeyCommand;
 
 	/**
 	 * Gets the commands.
@@ -133,6 +147,14 @@ public class Commands {
 		commands.put(config.getMessagePrefix() + "ratio", ratioCommand);
 		commands.put(config.getMessagePrefix() + "setign", setIgnCommand);
 		commands.put(config.getMessagePrefix() + "whois", whoIsCommand);
+		
+		// API commands
+		commands.put(config.getMessagePrefix() + "rank", rankCommand);
+		commands.put(config.getMessagePrefix() + "constructedrank", rankCommand);
+		commands.put(config.getMessagePrefix() + "limitedrank", rankCommand);
+		commands.put(config.getMessagePrefix() + "status", statusCommand);
+		commands.put(config.getMessagePrefix() + "apikey", apiKeyCommand);
+		
 
 		//Generic Text Commands
 		Iterable<TextCommand> textCommands = textCommandRepo.findAll();

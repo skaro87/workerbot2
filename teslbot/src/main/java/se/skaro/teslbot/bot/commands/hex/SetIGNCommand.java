@@ -2,13 +2,11 @@ package se.skaro.teslbot.bot.commands.hex;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import se.skaro.teslbot.bot.ChatBot;
 import se.skaro.teslbot.bot.commands.AbstractCommand;
 import se.skaro.teslbot.data.entity.User;
-import se.skaro.teslbot.data.repository.UserRepository;
 
 /**
  * The Class SetIGNCommand. Used to set you HEX in game name in the user database. Only allows for a single word. HEX specific commands.
@@ -26,7 +24,7 @@ public class SetIGNCommand extends AbstractCommand{
 		if (isInputLengthOkay(input, bot, sender, channel)){
 			
 			if(!input.matches("[a-zA-Z0-9]*") && input.length() < 200){
-				messageSender.sendMessage(bot, sender, sender + ", you can only include a-z and 0-9 in a single word as your IGN", channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, sender + ", you can only include a-z and 0-9 in a single word as your IGN", channel);
 			} else {
 				List<User> data = userRepo.findByName(sender);
 				User user;
@@ -40,7 +38,7 @@ public class SetIGNCommand extends AbstractCommand{
 				
 				userRepo.save(user);
 				
-				messageSender.sendMessage(bot, sender, "IGN updated for user "+sender, channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "IGN updated for user "+sender, channel);
 			}
 			
 			

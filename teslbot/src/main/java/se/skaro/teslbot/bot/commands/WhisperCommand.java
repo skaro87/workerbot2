@@ -2,12 +2,10 @@ package se.skaro.teslbot.bot.commands;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import se.skaro.teslbot.bot.ChatBot;
 import se.skaro.teslbot.data.entity.User;
-import se.skaro.teslbot.data.repository.UserRepository;
 
 /**
  * The Class WhisperCommand. Used to change the whisper settings for a user.
@@ -42,16 +40,16 @@ public class WhisperCommand extends AbstractCommand {
 
 				if (whisperMessage.toLowerCase().contains("on")) {
 					user.setWhispers(true);
-					messageSender.sendMessage(bot, sender, "Whispers on for channel "+config.getChannelPrefix()+sender, channel, false);
+					messageSender.sendMessage(bot, sender, "Whispers on for channel "+config.getChannelPrefix()+sender, channel);
 				} else {
 					user.setWhispers(false);
-					messageSender.sendMessage(bot, sender, "Whispers off for channel "+config.getChannelPrefix()+sender, channel, false);
+					messageSender.sendMessage(bot, sender, "Whispers off for channel "+config.getChannelPrefix()+sender, channel);
 				}
 				userRepo.save(user);
 				
 			}
 		} else {
-			messageSender.sendMessage(bot, sender, "Invalid message. Use on/off to set whisper settings" + config.getChannelPrefix()+sender, channel, false);
+			messageSender.sendMessage(bot, sender, "Invalid message. Use on/off to set whisper settings" + config.getChannelPrefix()+sender, channel);
 		}
 
 	}

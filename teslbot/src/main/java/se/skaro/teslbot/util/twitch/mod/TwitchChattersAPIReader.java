@@ -1,4 +1,4 @@
-package se.skaro.teslbot.util.twitch;
+package se.skaro.teslbot.util.twitch.mod;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,23 +15,26 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import se.skaro.teslbot.config.ExternalConfigComponents;
-import se.skaro.teslbot.util.twitch.json.TwitchApiJson;
+import se.skaro.teslbot.config.GsonFactory;
+import se.skaro.teslbot.util.twitch.mod.json.TwitchApiJson;
 
 /**
  * The Class TwitchAPIReader. Used to read the tmi.twitch api.
  */
 @Component
-public class TwitchAPIReader {
+public class TwitchChattersAPIReader {
 	
 	@Autowired
 	private ExternalConfigComponents config;
+	
+	@Autowired 
+	private GsonFactory gsonFactory;
 	
 	public List<String> getModList(String channel){
 		String url = config.getTwitchApiUrl().replace("USER", channel.replace(config.getChannelPrefix(), ""));
 		String jsonString = readURL(url);
 		
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		Gson gson = gsonBuilder.create();
+		Gson gson = gsonFactory.getGson();
 		
 		TwitchApiJson json = gson.fromJson(jsonString, TwitchApiJson.class);
 		

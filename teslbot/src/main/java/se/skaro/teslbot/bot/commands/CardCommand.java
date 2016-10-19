@@ -40,7 +40,7 @@ public class CardCommand extends AbstractCommand {
 		String cardName = fixWhiteSpaces(getMessageWithoutCommand(config.getMessagePrefix() + "card", message));
 
 		if (cardName.length() < MINIMUM_SEARCH_LENGTH) {
-			messageSender.sendMessage(bot, sender, "You need at least " + MINIMUM_SEARCH_LENGTH + "characters to search for a card", channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, "You need at least " + MINIMUM_SEARCH_LENGTH + "characters to search for a card", channel);
 		}
 
 		else {
@@ -116,10 +116,10 @@ public class CardCommand extends AbstractCommand {
 		String closestMatch = findClosestMatch(hexcardRepository.findByFormatedNameWithWildCards(searchMessage), searchMessage);
 		
 		if (closestMatch == null) {
-			messageSender.sendMessage(bot, sender, "No card with name '" + cardName + "' found", channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, "No card with name '" + cardName + "' found", channel);
 		} else {
 			//TODO: Duplicate cards found logic
-			messageSender.sendMessage(bot, sender, hexcardRepository.findByName(closestMatch).toString(), channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, hexcardRepository.findByName(closestMatch).toString(), channel);
 		}
 	}
 	
@@ -136,9 +136,9 @@ public class CardCommand extends AbstractCommand {
 
 		String closestMatch = findClosestMatch(teslcardRepository.findByNameWithWildCards(cardName), cardName);
 		if (closestMatch == null) {
-			messageSender.sendMessage(bot, sender, "No card with name '" + cardName + "' found", channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, "No card with name '" + cardName + "' found", channel);
 		} else {
-			messageSender.sendMessage(bot, sender, teslcardRepository.findByName(closestMatch).toString(), channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, teslcardRepository.findByName(closestMatch).toString(), channel);
 		}
 	}
 

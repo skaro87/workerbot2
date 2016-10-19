@@ -40,7 +40,7 @@ public class JoinCommand extends AbstractCommand {
 		}
 		
 		else {
-			messageSender.sendMessage(bot, sender, "I am already in your channel, "+sender, channel, false);
+			messageSender.sendMessage(bot, sender, "I am already in your channel, "+sender, channel);
 		}
 
 	}
@@ -53,9 +53,9 @@ public class JoinCommand extends AbstractCommand {
 	 * @param channel the channel
 	 */
 	private void joinChannel(ChatBot bot, String sender, String channel) {
-		messageSender.sendMessage(bot, sender, "Joining channel #" + sender, channel, false);
+		messageSender.sendMessage(bot, sender, "Joining channel #" + sender, channel);
 		bot.joinChannel(config.getChannelPrefix() + sender);
-		messageSender.sendMessage(bot, sender, config.getJoinMessage(), config.getChannelPrefix() + sender, false);
+		messageSender.sendMessage(bot, sender, config.getJoinMessage(), config.getChannelPrefix() + sender);
 		
 	}
 

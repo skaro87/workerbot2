@@ -34,12 +34,12 @@ public class GenericTextCommand extends AbstractCommand {
 		String reply = messages.get(syntax).getMessage();
 
 		if (!messages.get(syntax).isHexOnly()) {
-			messageSender.sendMessage(bot, sender, reply, channel, false);
+			messageSender.sendMessage(bot, sender, reply, channel);
 		}
 
 		else {
 			if (isGameSetToHex(channel)) {
-				messageSender.sendMessage(bot, sender, reply, channel, false);
+				messageSender.sendMessage(bot, sender, reply, channel);
 			}
 		}
 

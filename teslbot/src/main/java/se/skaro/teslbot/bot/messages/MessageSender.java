@@ -12,7 +12,7 @@ import se.skaro.teslbot.bot.ChatBot;
 import se.skaro.teslbot.config.ExternalConfigComponents;
 import se.skaro.teslbot.data.entity.User;
 import se.skaro.teslbot.data.repository.UserRepository;
-import se.skaro.teslbot.util.twitch.TwitchModUtil;
+import se.skaro.teslbot.util.twitch.mod.TwitchModUtil;
 
 /**
  * The Class MessageSender. Used to send messages with the ChatBot
@@ -35,13 +35,12 @@ public class MessageSender {
 	
 	private Timer time;
 	/**
-	 * Send message. 
+	 * Send message. Sends a message or a whisper depending on the status of the sender in the channel. sendWhisper() is used to send only whispers
 	 *
 	 * @param bot the bot
 	 * @param sender the sender of the original message. Used to send whispers.
 	 * @param message the message to be sent.
 	 * @param channel the channel to send the message to.
-	 * @param whisperCommand if the message is a message that can be sent as a whisper.
 	 */
 	
 	@PostConstruct
@@ -51,11 +50,16 @@ public class MessageSender {
 		time.schedule(messageTask, 0, config.getMillisecondsBetweenMessages());
 	}
 	
-	public void sendMessage(ChatBot bot, String sender, String message, String channel, boolean whisperCommand) {
+	
+	public void sendMessage(ChatBot bot, String sender, String message, String channel){
+		sendMessageOrAddToQueue(new Message(bot, sender, message, channel, false));
+	}
+	
+	public void sendMessageOrWhisper(ChatBot bot, String sender, String message, String channel) {
 		
 		String userToCheck = channel.replace(config.getChannelPrefix(), "");
 		
-		if (whisperCommand && config.getGlobalWhisperSettings()) {
+		if (config.getGlobalWhisperSettings()) {
 			List<User> users = userRepository.findByName(userToCheck);
 			
 			if (!users.isEmpty()) {
@@ -73,6 +77,10 @@ public class MessageSender {
 
 		sendMessageOrAddToQueue(new Message(bot, sender, message, channel, false));
 
+	}
+	
+	public void sendWhisper(ChatBot bot, String sender, String message, String channel) {
+		sendMessageOrAddToQueue(new Message(bot, sender, message, channel, true));
 	}
 	
 	private void sendMessageOrAddToQueue(Message message){

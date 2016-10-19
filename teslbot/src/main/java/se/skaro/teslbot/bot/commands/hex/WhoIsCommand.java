@@ -34,14 +34,14 @@ public class WhoIsCommand extends AbstractCommand {
 			List<User> data = repo.findByIgn(input);
 
 			if (data.isEmpty()) {
-				messageSender.sendMessage(bot, sender, "No user with IGN " + input + " found", channel, false);
+				messageSender.sendMessage(bot, sender, "No user with IGN " + input + " found", channel);
 			} else {
 
 				if (data.get(0).getIgn().isEmpty()) {
-					messageSender.sendMessage(bot, sender, "No user with IGN " + input + " found", channel, false);
+					messageSender.sendMessage(bot, sender, "No user with IGN " + input + " found", channel);
 				} else {
 					messageSender.sendMessage(bot, sender,
-							data.get(0).getIgn() + " is " + data.get(0).getName() + " on twitch", channel, false);
+							data.get(0).getIgn() + " is " + data.get(0).getName() + " on twitch", channel);
 				}
 			}
 

@@ -1,21 +1,12 @@
 package se.skaro.teslbot.bot.commands.hex;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import se.skaro.teslbot.bot.ChatBot;
@@ -35,6 +26,9 @@ public class ImageCommand extends AbstractCommand {
 	/** The HEX card repository. */
 	@Autowired
 	private HEXCardRepository repo;
+	
+	@Autowired
+	private SimpMessagingTemplate socketMessager;
 
 	/* (non-Javadoc)
 	 * @see se.skaro.teslbot.bot.commands.AbstractCommand#call(se.skaro.teslbot.bot.ChatBot, java.lang.String, java.lang.String, java.lang.String)
@@ -79,7 +73,7 @@ public class ImageCommand extends AbstractCommand {
 		String closestMatch = findClosestMatch(repo.findByFormatedNameWithWildCards(searchMessage), searchMessage);
 		
 		if (closestMatch == null) {
-			messageSender.sendMessage(bot, sender, "No card with name '" + cardName + "' found", channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, "No card with name '" + cardName + "' found", channel);
 			return null;
 		} else {
 			//TODO: Multiple cards found
@@ -120,47 +114,16 @@ public class ImageCommand extends AbstractCommand {
 	 */
 	private void sendResponse(HEXCard card, ChatBot bot, String sender, String channel, boolean aa) {
 		
+		String path = cardInfo(card, aa);
+		String link = config.getImgHostUrl() + path.toLowerCase();
+		
 		if (!channel.endsWith(sender)) {
-			String path = cardInfo(card, aa);
-			messageSender.sendMessage(bot, sender, config.getImgHostUrl() + path.toLowerCase(), channel, true);
+			messageSender.sendMessageOrWhisper(bot, sender, link, channel);
 
 		} else {
+			System.out.println("sending socket");
+			socketMessager.convertAndSend("/workerbot/img/" + channel.replace(config.getChannelPrefix(), ""), link);
 
-			sendURLCall(card, bot, sender, channel, aa);
-
-		}
-	}
-
-	/**
-	 * Send url call.
-	 *
-	 * @param card the card
-	 * @param bot the bot
-	 * @param sender the sender
-	 * @param channel the channel
-	 * @param aa the aa
-	 */
-	private void sendURLCall(HEXCard card, ChatBot bot, String sender, String channel, boolean aa) {
-		String urlCall = config.getImgPluginUrl().replace("USER", sender);
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpPost post = new HttpPost(urlCall);
-
-		List<NameValuePair> urlParameters = new ArrayList<>();
-		urlParameters.add(
-				new BasicNameValuePair("password", config.getImgPassword()));
-		urlParameters.add(new BasicNameValuePair("url", cardInfo(card, aa)));
-		try {
-			post.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-			HttpResponse response;
-
-			response = client.execute(post);
-			if (!(response.getStatusLine().getStatusCode() == 201)) {
-				
-			}
-
-		} catch (IOException e) {
-			logger.error("Could not find image: "+e.getMessage());
 		}
 	}
 

@@ -35,9 +35,9 @@ public class RatioCommand extends AbstractCommand{
 			}
 			
 			if (ratio == 0){
-				messageSender.sendMessage(bot, sender, "Could not find the current ratio", channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "Could not find the current ratio", channel);
 			} else {
-				messageSender.sendMessage(bot, sender, "1 platinum is currently worth "+String.format("%.2f", ratio)+" gold", channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "1 platinum is currently worth "+String.format("%.2f", ratio)+" gold", channel);
 			}
 		}
 		

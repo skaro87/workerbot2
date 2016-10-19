@@ -28,24 +28,24 @@ public class GameCommand extends AbstractCommand {
 				//HEX
 				if (compareStringFromConfigWithGameMessage(config.getHexGameString(), gameMessage)) {
 					setGame(1, sender);
-					messageSender.sendMessage(bot, sender, "Game set to HEX: Shards of Fate", channel, false);
+					messageSender.sendMessage(bot, sender, "Game set to HEX: Shards of Fate", channel);
 				} 
 				
 				//TES:L
 				else if (compareStringFromConfigWithGameMessage(config.getTeslGameString(), gameMessage)) {
 					setGame(2, sender);
-					messageSender.sendMessage(bot, sender, "Game set to The Elder Scrolls: Legends", channel, false);
+					messageSender.sendMessage(bot, sender, "Game set to The Elder Scrolls: Legends", channel);
 				} 
 				
 				//None
 				else if (compareStringFromConfigWithGameMessage(config.getNoneGameString(), gameMessage)) {
 					setGame(0, sender);
-					messageSender.sendMessage(bot, sender, "Game specific commands disabled", channel, false);
+					messageSender.sendMessage(bot, sender, "Game specific commands disabled", channel);
 				} 
 				
 				//No match
 				else {
-					messageSender.sendMessage(bot, sender, config.getNoGameFoundMessage(), channel, false);
+					messageSender.sendMessage(bot, sender, config.getNoGameFoundMessage(), channel);
 				}
 
 			
@@ -57,13 +57,13 @@ public class GameCommand extends AbstractCommand {
 				User user = users.get(0);
 				switch (user.getGame()){
 				case 0: 
-					messageSender.sendMessage(bot, sender, config.getNoGameSetMessage(), channel, false);
+					messageSender.sendMessage(bot, sender, config.getNoGameSetMessage(), channel);
 					break;
 				case 1: 
-					messageSender.sendMessage(bot, sender, config.getHexGameMessage(), channel, false);
+					messageSender.sendMessage(bot, sender, config.getHexGameMessage(), channel);
 					break;
 				case 2: 
-					messageSender.sendMessage(bot, sender, config.getTeslGameMessage(), channel, false);
+					messageSender.sendMessage(bot, sender, config.getTeslGameMessage(), channel);
 					break;
 				default: 
 					break;

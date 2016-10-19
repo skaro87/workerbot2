@@ -32,9 +32,9 @@ public class GemCommand extends AbstractCommand {
 
 			List<Gem> result = repo.findByNameWithWildCards(name);
 			if (result.isEmpty()) {
-				messageSender.sendMessage(bot, sender, "No gem with name " + name + " found", channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "No gem with name " + name + " found", channel);
 			} else if (result.size() == 1) {
-				messageSender.sendMessage(bot, sender, result.get(0).toString(), channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, result.get(0).toString(), channel);
 			}
 
 			else {
@@ -53,7 +53,7 @@ public class GemCommand extends AbstractCommand {
 					sb.append(g.getName());
 					separator = ", ";
 				}
-				messageSender.sendMessage(bot, sender, sb.toString(), channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, sb.toString(), channel);
 			}
 
 		} 

@@ -31,18 +31,16 @@ public class IGNCommand extends AbstractCommand {
 				List<User> data = userRepo.findByName(input);
 
 				if (data.isEmpty()) {
-					messageSender.sendMessage(bot, sender,
-							"@"+sender+", IGN for user " + input + " not registed. To do so, type !setign {username}", channel,
-							false);
+					messageSender.sendMessageOrWhisper(bot, sender,
+							"@"+sender+", IGN for user " + input + " not registed. To do so, type !setign {username}", channel);
 				} else {
 
 					if (data.get(0).getIgn().isEmpty()) {
 						messageSender.sendMessage(bot, sender,
-								"@"+sender+", IGN for user " + input + " not registed. To do so, type !setign {username}", channel,
-								false);
+								"@"+sender+", IGN for user " + input + " not registed. To do so, type !setign {username}", channel);
 					} else {
-						messageSender.sendMessage(bot, sender, "@"+sender+", IGN for user " + input + " is " + StringUtils.capitalize(data.get(0).getIgn()),
-								channel, false);
+						messageSender.sendMessageOrWhisper(bot, sender, "@"+sender+", IGN for user " + input + " is " + StringUtils.capitalize(data.get(0).getIgn()),
+								channel);
 					}
 				}
 
@@ -53,15 +51,15 @@ public class IGNCommand extends AbstractCommand {
 					if (data.isEmpty()) {
 						messageSender.sendMessage(bot, sender,
 								"@" + sender + ", you have not registerd your IGN. To do so, type !setign {username}",
-								channel, false);
+								channel);
 					} else {
 						if (data.get(0).getIgn().isEmpty()) {
 							messageSender.sendMessage(bot, sender,
 									"IGN for user " + sender + " not registed. To do so, type !setign {username}",
-									channel, false);
+									channel);
 						} else {
 							messageSender.sendMessage(bot, sender,
-									"IGN for user " + sender + " is " + StringUtils.capitalize(data.get(0).getIgn()), channel, false);
+									"IGN for user " + sender + " is " + StringUtils.capitalize(data.get(0).getIgn()), channel);
 						}
 					}
 				}

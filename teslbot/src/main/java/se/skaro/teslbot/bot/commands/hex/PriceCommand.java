@@ -28,18 +28,18 @@ public class PriceCommand extends AbstractCommand {
 			if (!data.isEmpty()) {
 
 				if (data.size() == 1) {
-					messageSender.sendMessage(bot, sender, getPriceForItem(data.get(0)), channel, true);
+					messageSender.sendMessageOrWhisper(bot, sender, getPriceForItem(data.get(0)), channel);
 				}
 
 				else {
 					data = getExactMatchIncludingAA(data, input);
 
 					if (data.size() == 1) {
-						messageSender.sendMessage(bot, sender, getPriceForItem(data.get(0)), channel, true);
+						messageSender.sendMessageOrWhisper(bot, sender, getPriceForItem(data.get(0)), channel);
 					}
 
 					else if (data.size() > 6){
-						messageSender.sendMessage(bot, sender, "Found "+data.size()+" items. Please specify your search", channel, true);
+						messageSender.sendMessageOrWhisper(bot, sender, "Found "+data.size()+" items. Please specify your search", channel);
 
 					} else {
 						
@@ -51,7 +51,7 @@ public class PriceCommand extends AbstractCommand {
 			                sb.append(item.getListedPrice(ratio));
 			                separator = ", ";
 			            }
-			            messageSender.sendMessage(bot, sender, sb.toString(), channel, true);
+			            messageSender.sendMessageOrWhisper(bot, sender, sb.toString(), channel);
 			           
 			            
 					}
@@ -59,7 +59,7 @@ public class PriceCommand extends AbstractCommand {
 				}
 
 			} else {
-				messageSender.sendMessage(bot, sender, "No data found for item "+input, channel, true);
+				messageSender.sendMessageOrWhisper(bot, sender, "No data found for item "+input, channel);
 			}
 
 		}
