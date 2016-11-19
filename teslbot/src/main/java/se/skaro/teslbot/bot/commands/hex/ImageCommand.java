@@ -115,13 +115,12 @@ public class ImageCommand extends AbstractCommand {
 	private void sendResponse(HEXCard card, ChatBot bot, String sender, String channel, boolean aa) {
 		
 		String path = cardInfo(card, aa);
-		String link = config.getImgHostUrl() + path.toLowerCase();
+		String link = config.getImgHostUrl() + path;
 		
 		if (!channel.endsWith(sender)) {
 			messageSender.sendMessageOrWhisper(bot, sender, link, channel);
 
 		} else {
-			System.out.println("sending socket");
 			socketMessager.convertAndSend("/workerbot/img/" + channel.replace(config.getChannelPrefix(), ""), link);
 
 		}
@@ -136,15 +135,15 @@ public class ImageCommand extends AbstractCommand {
 	 */
 	private String cardInfo(HEXCard card, boolean aa) {
 
-		String name = card.getName().replaceAll(" ", "-").replaceAll("'", "-").replaceAll(",", "");
+		String name = card.getName();
 
 		if (card.getAa().equalsIgnoreCase("yes") && aa) {
-			return ("/cards/aa/" + name + "-aa.png").toLowerCase();
+			return ("/cards/AA/" + name + " AA.png").replaceAll(" ", "%20").replaceAll("'", "%27").replaceAll(",", "%2C");
 		}
 
-		String set = card.getSet().replaceAll(" ", "-");
+		String set = card.getSet();
 
-		return ("/cards/" + set + "/" + name + ".png").toLowerCase();
+		return ("/cards/" + set + "/" + name + ".png").replaceAll(" ", "%20").replaceAll("'", "%27").replaceAll(",", "%2C");
 	}
 
 }

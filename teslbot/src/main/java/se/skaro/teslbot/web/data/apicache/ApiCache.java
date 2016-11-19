@@ -12,35 +12,21 @@ import org.springframework.stereotype.Component;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-import se.skaro.teslbot.bot.ChatBot;
-import se.skaro.teslbot.bot.messages.MessageSender;
-import se.skaro.teslbot.config.ExternalConfigComponents;
-import se.skaro.teslbot.util.twitch.streamers.StreamersByGameAPIReader;
+import se.skaro.teslbot.data.repository.UserRepository;
 
 @Component
 public class ApiCache {
 
-	private Cache<String, Optional<ApiUser>> apiCache;
-
-	@Autowired
-	private ChatBot bot;
-
-	@Autowired
-	private MessageSender messageSender;
-
-	@Autowired
-	private StreamersByGameAPIReader streamerApi;
-
-	@Autowired
-	private ExternalConfigComponents config;
+	private Cache<String, Optional<ApiUser>> apiCache;;
+	
+	@Autowired UserRepository userRepository;
 
 	@PostConstruct
 	public void buildCache() {
-		apiCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(1000).build();
+		apiCache = CacheBuilder.newBuilder().expireAfterWrite(60, TimeUnit.MINUTES).maximumSize(1000).build();		
 	}
 
 	private void putOrUpdateApiUser(String key, Optional<ApiUser> apiUser) {
-		System.out.println("Putting " + key + " in apiCache");
 		apiCache.put(key, apiUser);
 	}
 
@@ -54,30 +40,6 @@ public class ApiCache {
 		}
 		return Optional.empty();
 	}
-	
-	public void updateDraft(String key, Draft draft, String ign){
-		Optional<ApiUser> apiUser = getApiUser(key);
-		Optional<Draft> apiDraft;
-		
-		if (!apiUser.isPresent()) {
-			apiUser = Optional.of(new ApiUser());
-			apiDraft = Optional.of(draft);	
-		}
-		
-		else {
-			apiDraft = apiUser.get().getDraft();
-			if (!apiDraft.isPresent()){
-				apiDraft = Optional.of(draft);	
-			}
-			
-		}
-		
-		apiUser.get().setDraft(draft);
-		apiUser.get().setStatus(draft.toString());
-		apiUser.get().setIgn(ign);
-		System.out.println("Updating draft");
-		putOrUpdateApiUser(key, apiUser);
-	}
 
 	public void updateConstructedRank(String key, String rank, String ign) {
 		Optional<ApiUser> apiUser = getApiUser(key);
@@ -85,8 +47,6 @@ public class ApiCache {
 			apiUser = Optional.of(new ApiUser());
 		}
 		apiUser.get().setConstructedRank(rank);
-		apiUser.get().setIgn(ign);
-		System.out.println("Updating constructed rank");
 		putOrUpdateApiUser(key, apiUser);
 	}
 
@@ -96,46 +56,17 @@ public class ApiCache {
 			apiUser = Optional.of(new ApiUser());
 		}
 		apiUser.get().setLimitedRank(rank);
-		apiUser.get().setIgn(ign);
-		System.out.println("Updating constructed rank");
 		putOrUpdateApiUser(key, apiUser);
 	}
 
-	public void updateStatus(String key, String status, String ign) {
+	public void updateStatus(String key, Status status, String ign) {
 		Optional<ApiUser> apiUser = getApiUser(key);
 		if (!apiUser.isPresent()) {
 			apiUser = Optional.of(new ApiUser());
 		}
+		status.setIgn(ign);
 		apiUser.get().setStatus(status);
-		apiUser.get().setIgn(ign);
 		putOrUpdateApiUser(key, apiUser);
-	}
-
-	public void updateStatusAndSendMessage(String key, String status, String ign) {
-		Optional<ApiUser> lastApiUserState = getApiUser(key);
-
-		if (streamerApi.getCurrentHEXStreamers().contains(key)) {
-			if (lastApiUserState.isPresent()) {
-				
-				if (lastApiUserState.get().getStatus().isPresent()) {
-					
-					if (!lastApiUserState.get().getStatus().get().equals(status)) {
-						messageSender.sendMessage(bot, "skaro87", status, "#skaro87");
-					}
-				} 
-				
-				else {
-					messageSender.sendMessage(bot, "skaro87", status, "#skaro87");
-				}
-			} 
-			
-			else {
-				messageSender.sendMessage(bot, "skaro87", status, "#skaro87");
-			}
-		}
-
-		updateStatus(key, status, ign);
-
 	}
 
 }

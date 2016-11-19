@@ -110,6 +110,9 @@ public class Commands {
 	
 	@Autowired
 	private ApiKeyCommand apiKeyCommand;
+	
+	@Autowired
+	private AddStreamAsOnlineCommand streamOnlineCommand;
 
 	/**
 	 * Gets the commands.
@@ -154,6 +157,7 @@ public class Commands {
 		commands.put(config.getMessagePrefix() + "limitedrank", rankCommand);
 		commands.put(config.getMessagePrefix() + "status", statusCommand);
 		commands.put(config.getMessagePrefix() + "apikey", apiKeyCommand);
+		commands.put(config.getMessagePrefix() + "streamonline", streamOnlineCommand);
 		
 
 		//Generic Text Commands

@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TextCommand. Used to get GenericTextCommands from the commands table
@@ -33,7 +35,7 @@ public final class TextCommand {
 	private String helpText;
 	
 	/** Hex only commands. */
-	@Column(name = "hex_only", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "hex_only", nullable = false)
 	private boolean hexOnly;
 
 	/**

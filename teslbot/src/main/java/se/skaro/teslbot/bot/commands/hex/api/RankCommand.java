@@ -2,6 +2,7 @@ package se.skaro.teslbot.bot.commands.hex.api;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,41 +24,44 @@ public class RankCommand extends AbstractCommand {
 	@Override
 	public void call(ChatBot bot, String sender, String message, String channel) {
 
-		String user = channel.replace(config.getChannelPrefix(), "");
+		if (isGameSetToHex(channel)) {
+			String user = channel.replace(config.getChannelPrefix(), "");
 
-		if (streams.getCurrentHEXStreamers().contains(user)) {
-			String output = "No rank data found for user " + user;
-			
-			System.out.println("Rank command for user");
+			if (streams.getCurrentHEXStreamers().contains(user)) {
+				String output = "No rank data found for user " + user;
 
-			Optional<ApiUser> apiUser = db.getApiUser(user);
+				System.out.println("Rank command for user");
 
-			if (apiUser.isPresent()) {
-				System.out.println(user + ", Constructed: " + apiUser.get().getConstructedRank().isPresent()
-						+ ". Limited: " + apiUser.get().getLimitedRank().isPresent());
+				Optional<ApiUser> apiUser = db.getApiUser(user);
 
-				output = compileMessage(apiUser.get(), user);
+				if (apiUser.isPresent()) {
+					System.out.println(user + ", Constructed: " + apiUser.get().getConstructedRank().isPresent()
+							+ ". Limited: " + apiUser.get().getLimitedRank().isPresent());
+
+					output = compileMessage(apiUser.get(), StringUtils.capitalize(user));
+
+				}
+
+				messageSender.sendMessageOrWhisper(bot, sender, output, channel);
 
 			}
 
-			messageSender.sendMessageOrWhisper(bot, sender, output, channel);
-
 		}
-
 	}
 
 	private String compileMessage(ApiUser apiUser, String user) {
 
 		if (apiUser.getConstructedRank().isPresent() && !apiUser.getLimitedRank().isPresent()) {
-			return apiUser.getIgn().get() + " is currently "+apiUser.getConstructedRank().get()+ " in constructed";
-		} 
-		
+			return user + " is currently " + apiUser.getConstructedRank().get() + " in constructed";
+		}
+
 		else if (!apiUser.getConstructedRank().isPresent() && apiUser.getLimitedRank().isPresent()) {
-			return apiUser.getIgn().get() + " is currently "+apiUser.getLimitedRank().get()+ " in limited";
+			return user + " is currently " + apiUser.getLimitedRank().get() + " in limited";
 		}
 
 		else if (apiUser.getConstructedRank().isPresent() && apiUser.getLimitedRank().isPresent()) {
-			return apiUser.getIgn().get() + " is currently "+apiUser.getConstructedRank().get()+ " in constructed and "+apiUser.getLimitedRank().get() + " in limited";
+			return user + " is currently " + apiUser.getConstructedRank().get() + " in constructed and "
+					+ apiUser.getLimitedRank().get() + " in limited";
 		}
 
 		return "No rank data found for user " + user;

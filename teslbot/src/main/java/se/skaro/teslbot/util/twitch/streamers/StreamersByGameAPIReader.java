@@ -54,12 +54,18 @@ public class StreamersByGameAPIReader {
 				liveChannels.add(s.getChannel().getName());
 			});
 			
-			//TODO: Remove after testing
+			//TODO: Remove
 			liveChannels.add("skaro87");
 			
 			lastApiCall = LocalDateTime.now();
 		}
 		
+		return liveChannels;
+	}
+	
+	public synchronized Set<String> setStreamAsOnline(String user){
+		getCurrentHEXStreamers();
+		liveChannels.add(user);
 		return liveChannels;
 	}
 	

@@ -60,24 +60,31 @@ public class ChatBot extends PircBot {
 	protected void onConnect() {
 		
 		joinChannel(config.getChannelPrefix()+ config.getName());
-		joinChannel(config.getChannelPrefix()+ "skaro87");
-
-		
+		joinChannel(config.getChannelPrefix() + "skaro87");
+		/*
 		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
 
+		
 		users.forEach(user -> {
 
 			if (user.isInChannel()) {
 				logger.info("Joining channel: "+config.getChannelPrefix() + user.getName());
-				//TODO: REMOVE COMMENT | joinChannel(config.getChannelPrefix() + user.getName());
+				joinChannel(config.getChannelPrefix() + user.getName());
 				sleepForChannelJoin();
 			}
 		
 		});
+		*/
 		
 		
 
 		super.onConnect();
+	}
+	
+	@Override
+	protected void onDisconnect(){
+		logger.error("Bot disconnected. Trying to reconnect");
+		postConstruct();
 	}
 
 	/**

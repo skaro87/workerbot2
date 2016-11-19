@@ -63,7 +63,7 @@ public class PriceCommand extends AbstractCommand {
 			}
 
 		}
-
+		
 	}
 
 	private List<ItemPriceSimple> getExactMatchIncludingAA(List<ItemPriceSimple> data, String message) {

@@ -2,6 +2,7 @@ package se.skaro.teslbot.bot.messages;
 
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.annotation.PostConstruct;
 
@@ -82,6 +83,7 @@ public class MessageSender {
 	public void sendWhisper(ChatBot bot, String sender, String message, String channel) {
 		sendMessageOrAddToQueue(new Message(bot, sender, message, channel, true));
 	}
+	
 	
 	private void sendMessageOrAddToQueue(Message message){
 		messageTask.getMessageQueue().add(message);

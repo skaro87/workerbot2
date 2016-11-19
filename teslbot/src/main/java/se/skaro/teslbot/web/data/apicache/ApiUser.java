@@ -6,10 +6,7 @@ public class ApiUser {
 
 	private Optional<String> constructedRank = Optional.empty();
 	private Optional<String> limitedRank = Optional.empty();
-	private Optional<String> status = Optional.empty();
-	private Optional<String> ign = Optional.empty();
-	
-	private Optional<Draft> draft = Optional.empty();
+	private Optional<Status> status = Optional.empty();
 
 	public Optional<String> getConstructedRank() {
 		return constructedRank;
@@ -19,16 +16,8 @@ public class ApiUser {
 		return limitedRank;
 	}
 
-	public Optional<String> getStatus() {
+	public Optional<Status> getStatus() {
 		return status;
-	}
-	
-	public Optional<String> getIgn() {
-		return ign;
-	}
-	
-	public Optional<Draft> getDraft() {
-		return draft;
 	}
 
 	public void setConstructedRank(String constructedRank) {
@@ -39,16 +28,8 @@ public class ApiUser {
 		this.limitedRank = Optional.of(limitedRank);
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = Optional.of(status);
-	}
-
-	public void setDraft(Draft draft) {
-		this.draft = Optional.of(draft);	
-	}
-	
-	public void setIgn (String ign){
-		this.ign = Optional.of(ign);
 	}
 
 }

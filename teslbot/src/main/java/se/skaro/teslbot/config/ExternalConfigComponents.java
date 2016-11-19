@@ -44,6 +44,9 @@ public class ExternalConfigComponents {
 	
 	@Value("${twitch.messagebuffer}")
 	private int messagebuffer;
+
+	@Value("${twitch.streamdelay}")
+	private int streamdelay;
 	
 	@Value("${twitch.globalwhispersettings}")
 	private boolean globalWhisperSettings;
@@ -210,6 +213,10 @@ public class ExternalConfigComponents {
 
 	public String getTwitchGameUrl() {
 		return twitchGameUrl;
+	}
+
+	public int getStreamdelay() {
+		return streamdelay;
 	}
 
 	

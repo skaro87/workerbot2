@@ -14,17 +14,17 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
+	
 	@Column(name = "name", length = 255, nullable = false)
 	private String name;
 	
 	@Column(name = "ign", length = 255)
 	private String ign = "";
 	
-	@Column(name = "inchannel", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "inchannel", nullable = false)
 	private boolean inChannel;
 	
-	@Column(name = "whispers", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "whispers", nullable = false)
 	private boolean whispers;
 	
 	/**
@@ -87,6 +87,12 @@ public class User {
 	public void setIgn(String ign) {
 		this.ign = ign;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 	
 	
 	
