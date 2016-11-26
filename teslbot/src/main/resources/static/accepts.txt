@@ -1,1 +1,1 @@
-Tournament|DraftPack|DraftCardPicked
+Tournament|DraftPack|DraftCardPicked|Ladder

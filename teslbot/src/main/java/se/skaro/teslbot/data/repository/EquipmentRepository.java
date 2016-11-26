@@ -10,7 +10,7 @@ import se.skaro.teslbot.data.entity.Equipment;
 
 public interface EquipmentRepository extends CrudRepository<Equipment, Long> {
 	
-	@Query("SELECT e FROM Equipment e WHERE e.name LIKE %:name%")
+	@Query("SELECT e FROM Equipment e WHERE e.name LIKE %:name% OR e.affectedCardName LIKE %:name%")
 	public List<Equipment> findByNameWithWildCards(@Param("name") String name);
 
 }

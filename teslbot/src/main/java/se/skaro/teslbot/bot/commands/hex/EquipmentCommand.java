@@ -42,7 +42,7 @@ public class EquipmentCommand extends AbstractCommand {
 				messageSender.sendMessageOrWhisper(bot, sender, result.get(0).toString(), channel);
 			}
 			
-			else if (result.size() > 5){
+			else if (result.size() > 10){
 				messageSender.sendMessageOrWhisper(bot, sender, "Found "+result.size()+" equipments, please specify your search more", channel);
 			}
 

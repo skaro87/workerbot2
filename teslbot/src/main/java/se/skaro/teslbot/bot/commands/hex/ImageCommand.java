@@ -19,9 +19,6 @@ import se.skaro.teslbot.data.repository.HEXCardRepository;
  */
 @Component
 public class ImageCommand extends AbstractCommand {
-	
-	/** The Constant logger. */
-	private static final Logger logger = LoggerFactory.getLogger(ImageCommand.class);
 
 	/** The HEX card repository. */
 	@Autowired
@@ -41,6 +38,11 @@ public class ImageCommand extends AbstractCommand {
 		if (isInputLengthOkay(name, bot, sender, channel) && isGameSetToHex(channel)) {
 			
 			boolean searchForAA = false;
+			
+			if (name.toCharArray().equals("setup")){
+				messageSender.sendWhisper(bot, sender, "Use "+config.getImgPluginUrl().replace("USER", sender) + " for the image plugin", channel);
+				return;
+			}
 			
 			if (name.toLowerCase().startsWith("aa") || name.toLowerCase().endsWith("aa")) {
 				name = fixWhiteSpaces(name.toLowerCase().replace("aa", ""));

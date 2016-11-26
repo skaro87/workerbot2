@@ -54,9 +54,6 @@ public class StreamersByGameAPIReader {
 				liveChannels.add(s.getChannel().getName());
 			});
 			
-			//TODO: Remove
-			liveChannels.add("skaro87");
-			
 			lastApiCall = LocalDateTime.now();
 		}
 		

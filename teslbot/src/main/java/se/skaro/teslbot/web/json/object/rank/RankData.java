@@ -47,11 +47,12 @@ public class RankData {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getTier(tier));
-		sb.append(" rank ");
 		if (tier != 1){
+			sb.append(" tier ");
 			sb.append(getDivision(division));
 		}
 		else {
+			sb.append(" rank ");
 			sb.append(cosmicRank);
 		}
 		

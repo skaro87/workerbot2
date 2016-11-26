@@ -61,22 +61,20 @@ public class ChatBot extends PircBot {
 		
 		joinChannel(config.getChannelPrefix()+ config.getName());
 		joinChannel(config.getChannelPrefix() + "skaro87");
-		/*
+		
 		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
 
 		
 		users.forEach(user -> {
 
 			if (user.isInChannel()) {
-				logger.info("Joining channel: "+config.getChannelPrefix() + user.getName());
 				joinChannel(config.getChannelPrefix() + user.getName());
 				sleepForChannelJoin();
 			}
 		
 		});
-		*/
 		
-		
+		logger.info("Bot started. Channels Joined: "+this.getChannels().length);
 
 		super.onConnect();
 	}
@@ -93,9 +91,8 @@ public class ChatBot extends PircBot {
 	private void sleepForChannelJoin() {
 		
 		try {
-			//TODO: REMOVE COMMENT | Thread.sleep(config.getChannelJoinTimeout());
+			Thread.sleep(config.getChannelJoinTimeout());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

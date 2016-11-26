@@ -36,16 +36,15 @@ public class APIDataParser {
 	private GsonFactory gsonFactory;
 
 	private Gson gson;
-
-	//private Timer timer;
-
+	
 	@PostConstruct
 	public void postConstruct() {
 		gson = gsonFactory.getGson();
-		//timer = new Timer();
 	}
 
 	public Message getMessage(String json, String user) {
+		
+		System.out.println(json);
 
 		if (json.contains("\"Message\":\"Tournament\"")) {
 			return parseTournamentData(json, user);
@@ -118,26 +117,14 @@ public class APIDataParser {
 
 	}
 
-	// Done
 	private Message constructedLadder(TournamentData tournamentData, String user, String ign) {
 		Match match = new Match(tournamentData.getGames().get(0), ign, "Constructed Ladder");	
 		apiCache.updateStatus(user, match, ign);
 		return new Message(match.toString(), user);
 	}
 
-	// Not done
 	public synchronized Message constructedTournament(TournamentData tournamentData, String user, String ign) {
 		Tournament tournament = new Tournament(tournamentData, ign);
-		Optional<Match> match = tournament.getCurrentMatch();
-		
-		/*
-		if (match.isPresent()) {
-			if (match.get().isInGameOne() || match.get().isOver()) {
-				apiCache.updateStatus(user, tournament, ign);
-				return new Message(tournament.toStringWithSpans(), user);
-			}
-		}
-		*/
 		apiCache.updateStatus(user, tournament, ign);
 		return new Message(tournament.toStringWithSpans(), user);
 
@@ -147,7 +134,6 @@ public class APIDataParser {
 
 	}
 
-	// Implemented
 	public synchronized Message parseDraftCardPickedData(String json, String user) {
 		DraftCardPicked cardPicked = gson.fromJson(json, DraftCardPicked.class);
 		Draft draft = getCurrentDraft(user, cardPicked.getUser());
@@ -161,7 +147,6 @@ public class APIDataParser {
 				cardPicked.getUser(), 60);
 	}
 
-	// Implemented
 	public synchronized Message parseDraftPackData(String json, String user) {
 		DraftPack draftPack = gson.fromJson(json, DraftPack.class);
 		Draft draft = getCurrentDraft(user, draftPack.getUser());
@@ -174,7 +159,6 @@ public class APIDataParser {
 				draftPack.getUser(), 60);
 	}
 
-	// Implemented
 	private Draft getCurrentDraft(String user, String ign) {
 		Draft draft = null;
 		Optional<ApiUser> apiUser = apiCache.getApiUser(user);
@@ -195,7 +179,6 @@ public class APIDataParser {
 		return draft;
 	}
 
-	// Implemented
 	private Message parseRankData(String json, String user) {
 		RankData rankData = gson.fromJson(json, RankData.class);
 
